@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Проект: Магазин компьютерных игр (Приложение + БД)</title>
+  <style>
+    :root {
+      --primary: #1a1a2e;
+      --accent: #e94560;
+      --bg: #f4f4f9;
+      --text: #222;
+      --card-bg: #ffffff;
+    }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--text);
+      background-color: var(--bg);
+      line-height: 1.6;
+    }
+    header {
+      background: var(--primary);
+      color: #fff;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    h1 { margin: 0; }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 1rem;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 12px;
+      font-weight: 500;
+    }
+    nav a:hover { color: var(--accent); }
+    main {
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+    section { margin-bottom: 2.5rem; }
+    h2 { color: var(--primary); }
+    img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+      display: block;
+      margin: 1.2rem auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card-bg);
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    th {
+      background: var(--primary);
+      color: #fff;
+    }
+    tr:nth-child(even) { background: #fafafa; }
+    ul, ol { padding-left: 20px; }
+    .feature-list li::before {
+      content: "✅ ";
+      color: var(--accent);
+    }
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      background: #111;
+      color: #aaa;
+      margin-top: 2rem;
+    }
+    @media (max-width: 600px) {
+      nav ul { padding: 0.5rem 0; flex-direction: column; }
+      nav a { display: block; margin: 8px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Магазин компьютерных игр: приложение и база данных</h1>
+    <nav>
+      <ul>
+        <li><a href="#about">О проекте</a></li>
+        <li><a href="#architecture">Архитектура и БД</a></li>
+        <li><a href="#features">Функционал приложения</a></li>
+        <li><a href="#demo">Демо и ссылки</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="about">
+      <h2>О проекте</h2>
+      <p>Курсовая работа посвящена разработке веб‑приложения для продажи компьютерных игр и проектированию соответствующей реляционной базы данных. Цель — реализовать каталог, корзину, оформление заказа и хранение данных об играх, пользователях и транзакциях.</p>
+      <p>Проект демонстрирует:</p>
+      <ul class="feature-list">
+        <li>Нормализацию БД и связи между таблицами.</li>
+        <li>Покупку и взаимодействие с товарами.</li>
+      </ul>
+      <img src="images/1.jpg" alt="Магазин">
+    </section>
+
+    <section id="architecture">
+      <h2>Архитектура и структура базы данных</h2>
+      <p>База данных спроектирована в третьей нормальной форме. Основные сущности и их назначение:</p>
+      <table>
+        <thead>
+          <tr>
+            <th>Таблица</th>
+            <th>Назначение</th>
+            <th>Ключевые поля</th>
+            <th>Связи</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>games</td>
+            <td>Каталог игр</td>
+            <td>id, title, price, genre, release_date</td>
+            <td>Один ко многим с orders</td>
+          </tr>
+          <tr>
+            <td>users</td>
+            <td>Пользователи и аккаунты</td>
+            <td>id, username, email, password_hash, role</td>
+            <td>Один ко многим с orders</td>
+          </tr>
+          <tr>
+            <td>orders</td>
+            <td>Заказы и транзакции</td>
+            <td>id, user_id, status, total_amount, created_at</td>
+            <td>Многие ко многим через order_items</td>
+          </tr>
+          <tr>
+            <td>order_items</td>
+            <td>Состав заказа (позиции)</td>
+            <td>id, order_id, game_id, quantity, price_at_purchase</td>
+            <td>Связующая таблица</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="features">
+      <h2>Функционал приложения</h2>
+      <p>Основные возможности системы:</p>
+      <ol>
+        <li>Просмотр каталога с фильтрацией по жанру, цене и дате выхода.</li>
+        <li>Регистрация и авторизация пользователей с ролевой моделью (покупатель, администратор).</li>
+        <li>Добавление игр в корзину, расчёт итоговой суммы и оформление заказа.</li>
+        <li>Админ‑панель для управления товарами, статусами заказов и отчётами.</li>
+      </ol>
+    </section>
+
+    <section id="demo">
+      <h2>Демо, документация и репозиторий</h2>
+      <p>Для ознакомления с проектом доступны следующие материалы:</p>
+      <ul>
+        <li><a href="https://lilianweng.github.io/posts/2026-06-24-scaling-laws" target="_blank">Пример 1</a></li>
+        <li><a href="https://landscape-of-thoughts.github.io/" target="_blank">Пример 2</a></li>
+        <li><a href="https://github.com/b1m0qq" target="_blank">Репозиторий проекта на GitHub</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>
